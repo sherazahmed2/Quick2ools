@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency Converter</title>
+    <style>
+        :root { 
+            --bg:#f8fafc; 
+            --text:#1e293b; 
+            --muted:#64748b; 
+            --brand:#3b82f6; 
+            --brand-dark:#2563eb;
+            --accent:#8b5cf6;
+            --success:#10b981;
+            --card:#ffffff; 
+            --border:#e2e8f0;
+            --danger:#ef4444;
+            --ok:#16a34a;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { 
+            margin:0; 
+            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
+            color:var(--text); 
+            background:var(--bg); 
+            line-height:1.6; 
+            overflow-x: hidden;
+        }
+        a { color:inherit; text-decoration:none; transition: all 0.3s ease; }
+
+        /* Navbar */
+        .nav { 
+            position: sticky; 
+            top:0; 
+            z-index: 100; 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom:1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .nav-inner { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            display:flex; 
+            align-items:center; 
+            justify-content: space-between; 
+            height:70px; 
+        }
+        .brand { 
+            font-weight:800; 
+            font-size:1.5rem;
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .menu { display:flex; gap:8px; align-items:center; }
+        .menu a { 
+            padding:10px 16px; 
+            border-radius:8px; 
+            color:var(--text);
+            font-weight:500;
+            font-size:0.95rem;
+        }
+        .menu a:hover { 
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            color:#fff;
+            transform: translateY(-2px);
+        }
+        .menu-toggle { 
+            display:none; 
+            background:transparent; 
+            color:var(--text); 
+            border:2px solid var(--border); 
+            padding:8px 14px; 
+            border-radius:8px;
+            cursor: pointer;
+            font-weight:600;
+        }
+
+        @media (max-width: 800px) {
+            .menu { 
+                position: fixed; 
+                left:0; 
+                right:0; 
+                top:70px; 
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                border-bottom:1px solid var(--border); 
+                flex-direction: column; 
+                align-items: stretch; 
+                padding:12px; 
+                display:none;
+                box-shadow: var(--shadow-lg);
+            }
+            .menu.open { display:flex; }
+            .menu a { padding:14px; }
+            .menu-toggle { display:block; }
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .page-header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px 60px; }
+        .card { 
+            background:#fff; 
+            border:1px solid var(--border); 
+            border-radius:16px; 
+            padding:32px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        .banner { 
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.12)); 
+            border:1px solid var(--border); 
+            border-radius:12px; 
+            padding:16px; 
+            margin-bottom:24px; 
+            font-size:14px;
+            color: var(--text);
+        }
+        .row { display:flex; gap:12px; flex-wrap:wrap; align-items: flex-end; }
+        input, select { 
+            padding:14px; 
+            border:2px solid var(--border); 
+            border-radius:12px; 
+            font-size:16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        button { 
+            padding:14px 24px; 
+            border: none;
+            border-radius:12px; 
+            font-size:16px;
+            font-weight: 600;
+            cursor:pointer;
+            transition: all 0.3s ease;
+        }
+        button:not(.secondary) { 
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            color:#fff;
+        }
+        button:not(.secondary):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        button.secondary { 
+            background:#fff; 
+            color:var(--brand); 
+            border:2px solid var(--brand);
+        }
+        button.secondary:hover {
+            background: var(--brand);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        button:disabled { opacity:.6; cursor:not-allowed; transform: none !important; }
+        .muted { color:var(--muted); }
+        .result { 
+            margin-top:20px; 
+            font-weight:700; 
+            font-size:24px;
+            color: var(--text);
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+            border-radius: 12px;
+        }
+        .error { color: var(--danger); font-weight:600; }
+        .ok { color: var(--ok); font-weight:600; }
+        .label { 
+            font-size:13px; 
+            color:var(--muted); 
+            margin-bottom:8px;
+            font-weight: 600;
+        }
+        .col { display:flex; flex-direction:column; gap:8px; flex: 1 1 auto; min-width: 140px; }
+
+        footer { 
+            margin-top:80px; 
+            padding:50px 0; 
+            color:#cbd5e1; 
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            text-align:center; 
+        }
+        footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="index.html">Quick2ools</a>
+            <button class="menu-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.menu').classList.toggle('open')">Menu</button>
+            <div class="menu" id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="blogs.html">Blogs</a>
+                <a href="calculator.html">Calculator</a>
+                <a href="scientific-calculator.html">Scientific Calculator</a>
+                <a href="currency-converter.html">Currency Converter</a>
+                <a href="todo.html">To-Do List</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>💱 Currency Converter</h1>
+    </div>
+
+    <main class="container">
+        <div class="banner">💡 Live rates with auto-retry and your choices saved on this device.</div>
+        <div class="card">
+            <div class="row" style="margin-bottom:12px;">
+                <div class="col" style="min-width:120px;">
+                    <span class="label">Amount</span>
+                    <input id="amount" type="number" placeholder="Amount" value="1" min="0" step="any" />
+                </div>
+                <div class="col" style="min-width:180px;">
+                    <span class="label">From</span>
+                    <select id="from"></select>
+                </div>
+                <div class="col" style="min-width:180px;">
+                    <span class="label">To</span>
+                    <select id="to"></select>
+                </div>
+                <button id="convert">Convert</button>
+                <button id="swap" class="secondary">Swap</button>
+            </div>
+            <div class="muted" id="updated">Fetching rates…</div>
+            <div class="result" id="result"></div>
+            <div class="muted" id="selection"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;">
+            <a href="about.html" style="color:#cbd5e1;">About</a>
+            <span>•</span>
+            <a href="contact.html" style="color:#cbd5e1;">Contact</a>
+            <span>•</span>
+            <a href="privacy.html" style="color:#cbd5e1;">Privacy</a>
+            <span>•</span>
+            <a href="https://youtube.com/@game_kylie?si=OfRyNZBgbcXRecjK" target="_blank" rel="noopener" style="color:#93c5fd;">YouTube</a>
+        </div>
+        <div style="margin-top:8px;">© <span id="year"></span> Blogger Demo. All rights reserved.</div>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+    <script>
+        (function(){
+            const amount = document.getElementById('amount');
+            const fromSel = document.getElementById('from');
+            const toSel = document.getElementById('to');
+            const convertBtn = document.getElementById('convert');
+            const swapBtn = document.getElementById('swap');
+            const result = document.getElementById('result');
+            const updated = document.getElementById('updated');
+            const selection = document.getElementById('selection');
+            let rates = {};
+            let ratesReady = false;
+            const STORE = 'converter_state_v1';
+            const RATES_STORE = 'converter_rates_cache_v1';
+            const SYMBOLS_STORE = 'converter_symbols_cache_v1';
+            let currentBase = 'EUR';
+            const DEFAULT_CODES = ['USD','EUR','GBP','PKR','INR','AED','AUD','CAD','CNY','JPY','SAR'];
+            const DEFAULT_SYMBOLS = {
+                USD:'United States Dollar', EUR:'Euro', GBP:'British Pound', PKR:'Pakistani Rupee', INR:'Indian Rupee', AED:'UAE Dirham', AUD:'Australian Dollar', CAD:'Canadian Dollar', CNY:'Chinese Yuan', JPY:'Japanese Yen', SAR:'Saudi Riyal'
+            };
+
+            function saveState(){
+                const state = { amount: amount.value, from: fromSel.value, to: toSel.value };
+                localStorage.setItem(STORE, JSON.stringify(state));
+            }
+            function loadState(){
+                try {
+                    const s = JSON.parse(localStorage.getItem(STORE) || '{}');
+                    if(s.amount != null) amount.value = s.amount;
+                    if(s.from) fromSel.value = s.from;
+                    if(s.to) toSel.value = s.to;
+                } catch(e){}
+            }
+            function saveRates(){
+                try { localStorage.setItem(RATES_STORE, JSON.stringify({ when: Date.now(), rates })); } catch(e){}
+            }
+            function loadRates(){
+                try { const r = JSON.parse(localStorage.getItem(RATES_STORE) || 'null'); return r && r.rates ? r.rates : null; } catch(e){ return null; }
+            }
+            function saveSymbols(symbols){
+                try { localStorage.setItem(SYMBOLS_STORE, JSON.stringify({ when: Date.now(), symbols })); } catch(e){}
+            }
+            function loadSymbols(){
+                try { const r = JSON.parse(localStorage.getItem(SYMBOLS_STORE) || 'null'); return r && r.symbols ? r.symbols : null; } catch(e){ return null; }
+            }
+
+            function withTimeout(promise, ms){
+                return Promise.race([
+                    promise,
+                    new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))
+                ]);
+            }
+
+            async function fetchJson(url){
+                const res = await withTimeout(fetch(url), 7000);
+                if(!res.ok) throw new Error('http_'+res.status);
+                return res.json();
+            }
+
+            async function fetchRates(base){
+                convertBtn.disabled = true; swapBtn.disabled = true; updated.classList.remove('error');
+                updated.textContent = 'Fetching live rates…';
+                try{
+                    // Primary (ExchangeRate-API)
+                    const API_KEY = 'e06aad09e5503f5e8fa53ab6';
+                    const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${encodeURIComponent(base || 'USD')}`;
+                    const data = await fetchJson(url);
+                    if(data && data.conversion_rates){
+                        rates = data.conversion_rates;
+                        currentBase = data.base_code || base || 'USD';
+                        updated.innerHTML = `Base: ${currentBase} • Result: ${data.result || 'success'} <span class="ok">(live)</span>`;
+                        populateAndConvert();
+                        saveRates();
+                        ratesReady = true;
+                        return;
+                    }
+                    throw new Error('bad_payload');
+                }catch(e1){
+                    // Fallback: try base USD
+                    try{
+                        const API_KEY = 'e06aad09e5503f5e8fa53ab6';
+                        const data2 = await fetchJson(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`);
+                        if(!(data2 && data2.conversion_rates)) throw new Error('bad_payload2');
+                        rates = data2.conversion_rates || {};
+                        currentBase = data2.base_code || 'USD';
+                        updated.innerHTML = `Base: ${currentBase} • Result: ${data2.result || 'success'} <span class="ok">(fallback live)</span>`;
+                        populateAndConvert();
+                        saveRates();
+                        ratesReady = true;
+                    }catch(e2){
+                        // Last resort: cached
+                        const cached = loadRates();
+                        if(cached){
+                            rates = cached;
+                            updated.innerHTML = 'Using cached rates. <span class="error">Live fetch failed.</span>';
+                            populateAndConvert();
+                            ratesReady = true;
+                        } else {
+                            updated.classList.add('error');
+                            updated.textContent = 'Failed to fetch rates. Please check your internet and retry.';
+                            ratesReady = false;
+                        }
+                    }
+                } finally {
+                    convertBtn.disabled = false; swapBtn.disabled = false;
+                }
+            }
+
+            async function fetchSymbols(){
+                try{
+                    const API_KEY = 'e06aad09e5503f5e8fa53ab6';
+                    const data = await fetchJson(`https://v6.exchangerate-api.com/v6/${API_KEY}/codes`);
+                    // expected: { supported_codes: [["USD","United States Dollar"], ...] }
+                    if(data && Array.isArray(data.supported_codes)){
+                        const symbols = {};
+                        data.supported_codes.forEach(([code, name])=>{ symbols[code] = { description: name }; });
+                        saveSymbols(symbols);
+                        return symbols;
+                    }
+                    return loadSymbols();
+                }catch(e){ return loadSymbols(); }
+            }
+
+            function doConvert(){
+                const amt = parseFloat(amount.value);
+                const from = fromSel.value; const to = toSel.value;
+                if(!ratesReady){ result.textContent = 'Please wait… loading live rates.'; return; }
+                if(isNaN(amt)){ result.textContent = 'Enter a valid amount.'; return; }
+                if(!rates[from]){ result.textContent = `Rate for ${from} not available.`; return; }
+                if(!rates[to] && currentBase === from){ result.textContent = `Rate for ${to} not available.`; return; }
+                const converted = currentBase === from ? (amt * (rates[to] || 0)) : (amt * (rates[to] / rates[from]));
+                result.textContent = `${amt} ${from} = ${converted.toFixed(4)} ${to}`;
+                saveState();
+                // Update selection summary with names
+                const map = loadSymbols();
+                const fname = map && map[from] ? map[from].description : '';
+                const tname = map && map[to] ? map[to].description : '';
+                selection.textContent = `From: ${from}${fname ? ' — ' + fname : ''}   To: ${to}${tname ? ' — ' + tname : ''}`;
+            }
+
+            convertBtn.addEventListener('click', doConvert);
+            swapBtn.addEventListener('click', ()=>{ const f=fromSel.value; fromSel.value=toSel.value; toSel.value=f; doConvert(); });
+            amount.addEventListener('input', doConvert);
+            fromSel.addEventListener('change', ()=>{ saveState(); fetchRates(fromSel.value); });
+            toSel.addEventListener('change', doConvert);
+
+            function populateAndConvert(){
+                const codes = (Object.keys(rates).length ? Object.keys(rates).sort() : DEFAULT_CODES);
+                if(!codes.length){ return; }
+                const prevFrom = fromSel.value || 'USD';
+                const prevTo = toSel.value || 'PKR';
+                const sym = loadSymbols();
+                const renderLabel = (c)=> {
+                    const d = sym && sym[c] ? sym[c].description : (DEFAULT_SYMBOLS[c] || '');
+                    return d ? `${c} — ${d}` : c;
+                };
+                fromSel.innerHTML = codes.map(c=>`<option value="${c}">${renderLabel(c)}</option>`).join('');
+                toSel.innerHTML = codes.map(c=>`<option value="${c}">${renderLabel(c)}</option>`).join('');
+                // Restore saved or previous
+                loadState();
+                // Fallback defaults if not set
+                if(!fromSel.value) fromSel.value = prevFrom;
+                if(!toSel.value) toSel.value = prevTo;
+                if(!amount.value) amount.value = '1';
+                doConvert();
+            }
+
+            // Render defaults immediately
+            populateAndConvert();
+            // If we have cached rates, render fast first
+            const cached = loadRates();
+            if(cached){ rates = cached; populateAndConvert(); updated.textContent = 'Using cached rates, updating…'; }
+            // ensure symbols are fetched in background, then refresh labels
+            fetchSymbols().then(()=>populateAndConvert());
+            fetchRates('USD');
+        })();
+    </script>
+
+<!--
+    <footer style="margin-top:32px; padding:24px 0; color:#e5e7eb; background:#0b1220; text-align:center;">
+                <div style="margin-top:8px;">© <span id="year"></span> Quick2ools. All rights reserved. <span>Developed by <a href="https://www.upwork.com/freelancers/~01d1d5a749f178d27b">Sheraz A.</a></span></div>
+
+
+
+
+
+    </footer>
+-->
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+
+
