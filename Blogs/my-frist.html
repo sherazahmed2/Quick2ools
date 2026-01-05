@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demon Slayer (Kimetsu No Yaiba) – Complete Overview</title>
+    <style>
+        :root { 
+            --bg:#f8fafc; 
+            --text:#1e293b; 
+            --muted:#64748b; 
+            --brand:#3b82f6; 
+            --brand-dark:#2563eb;
+            --accent:#8b5cf6;
+            --success:#10b981;
+            --card:#ffffff; 
+            --border:#e2e8f0;
+            --ok:#16a34a;
+            --danger:#dc2626;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { 
+            margin:0; 
+            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
+            color:var(--text); 
+            background:var(--bg); 
+            line-height:1.6; 
+            overflow-x: hidden;
+        }
+        a { color:inherit; text-decoration:none; transition: all 0.3s ease; }
+
+        /* Navbar */
+        .nav { 
+            position: sticky; 
+            top:0; 
+            z-index: 100; 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom:1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .nav-inner { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+            display:flex; 
+            align-items:center; 
+            justify-content: space-between; 
+            height:70px; 
+        }
+        .brand { 
+            font-weight:800; 
+            font-size:1.5rem;
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .menu { display:flex; gap:8px; align-items:center; }
+        .menu a { 
+            padding:10px 16px; 
+            border-radius:8px; 
+            color:var(--text);
+            font-weight:500;
+            font-size:0.95rem;
+        }
+        .menu a:hover { 
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            color:#fff;
+            transform: translateY(-2px);
+        }
+        .menu-toggle { 
+            display:none; 
+            background:transparent; 
+            color:var(--text); 
+            border:2px solid var(--border); 
+            padding:8px 14px; 
+            border-radius:8px;
+            cursor: pointer;
+            font-weight:600;
+        }
+
+        @media (max-width: 800px) {
+            .menu { 
+                position: fixed; 
+                left:0; 
+                right:0; 
+                top:70px; 
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                border-bottom:1px solid var(--border); 
+                flex-direction: column; 
+                align-items: stretch; 
+                padding:12px; 
+                display:none;
+                box-shadow: var(--shadow-lg);
+            }
+            .menu.open { display:flex; }
+            .menu a { padding:14px; }
+            .menu-toggle { display:block; }
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .page-header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .container { max-width: 700px; margin: 0 auto; padding: 0 20px 60px; }
+        .card { 
+            background:#fff; 
+            border:1px solid var(--border); 
+            border-radius:16px; 
+            padding:28px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+        
+        .post-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        
+        .post-content h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .post-content p {
+            margin-bottom: 16px;
+        }
+        
+        .post-content a {
+            color: var(--brand);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        
+        .post-content a:hover {
+            color: var(--brand-dark);
+        }
+        
+        .post-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 24px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        footer { 
+            margin-top:80px; 
+            padding:50px 0; 
+            color:#cbd5e1; 
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            text-align:center; 
+        }
+        footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+   
+
+    <div class="page-header">
+        <h1>Demon Slayer (Kimetsu No Yaiba) – Complete Overview</h1>
+    </div>
+
+    <main class="container">
+        <div class="card">
+            <div class="post-content">
+                <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop" alt="Demon Slayer Anime" class="hero-image" />
+                
+                <p><a href="https://www.crunchyroll.com/series/GY5P48XEY/demon-slayer-kimetsu-no-yaiba" target="_blank" rel="noopener">Demon Slayer</a> is one of the most popular anime in the world. It currently has five seasons, each with its own focus and storyline.</p>
+
+                <h2>Season 1: The Beginning</h2>
+                <p>The first season was officially released on April 6, 2019, and has 26 episodes.</p>
+                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop" alt="Anime Character" class="post-image" />
+                <p>This season follows <a href="https://kimetsu-no-yaiba.fandom.com/wiki/Tanjiro_Kamado" target="_blank" rel="noopener">Kamado Tanjiro</a>'s journey as he tries to turn his sister <a href="https://kimetsu-no-yaiba.fandom.com/wiki/Nezuko_Kamado" target="_blank" rel="noopener">Nezuko</a> back into a human after their family is slaughtered by demons.</p>
+
+                <h2>Season 2: Mugen Train ARC</h2>
+                <p>The second season was released in late 2021 to early 2022, with a total of 7 episodes.</p>
+                <p>Season 2 focuses on the continued fight against powerful demons, including <a href="https://kimetsu-no-yaiba.fandom.com/wiki/Akaza" target="_blank" rel="noopener">Akaza</a>, the Upper Rank Three of the Twelve Kizuki.</p>
+                <p>It retells the events of the Mugen Train movie with new scenes and music, giving more depth to the story.</p>
+
+                <h2>Season 3: Swordsmith Village Arc</h2>
+                <p>The third season was officially released in Japan on April 9, 2023, with 11 episodes.</p>
+                <p>This season follows Tanjiro's fight to protect the hidden Swordsmith Village. The Demon Slayer Corps works to strengthen their weapons after an attack by two high-ranking demons.</p>
+
+                <h2>Season 4: Hashira Training Arc</h2>
+                <p>The fourth season aired on May 12, 2024, and has 8 episodes.</p>
+                <p>This season shows the training of the Hashira (elite demon slayers) as they prepare themselves to fight <a href="https://kimetsu-no-yaiba.fandom.com/wiki/Muzan_Kibutsuji" target="_blank" rel="noopener">Muzan Kibutsuji</a>, the main antagonist.</p>
+
+                <h2>Season 5: Infinity Castle Movie</h2>
+                <p>The fifth season, the movie Infinity Castle, was released in Japan on July 18, 2025. Its runtime is approximately 155 minutes (2 hours 35 minutes).</p>
+                <img src="https://images.unsplash.com/photo-1534809027769-b00d750a6bac?w=800&auto=format&fit=crop" alt="Anime Battle Scene" class="post-image" />
+                <p>The movie features fantastic animation and intense battles against the strongest demons, including Akaza and Doma.</p>
+                <p>Tanjiro and Giyu Tomioka face off against Akaza again in a battle full of unpredictable action.</p>
+
+                <h2>Events After Training</h2>
+                <p>After his training, Tanjiro had become much stronger and more skilled. In the Infinity Castle, after entering, Tanjiro and Giyu fought together, while others like Zenitsu also used all their strength. They even had to fight old friends who had been turned into demons.</p>
+                <p>Later, the Butterfly Sister was killed in the Infinity Castle, which was an extremely sad and emotional moment.</p>
+                <p>Muzan Kibutsuji was incredibly powerful and extremely hard to defeat. His jet-black hair and fierce appearance gave him the look of a true villain. He commands many demons whose job is to attack humans and turn them into demons, as Muzan plans to destroy humanity worldwide.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;">
+            <a href="about.html" style="color:#cbd5e1;">About</a>
+            <span>•</span>
+            <a href="contact.html" style="color:#cbd5e1;">Contact</a>
+            <span>•</span>
+            <a href="privacy.html" style="color:#cbd5e1;">Privacy</a>
+            <span>•</span>
+            <a href="https://youtube.com/@game_kylie?si=OfRyNZBgbcXRecjK" target="_blank" rel="noopener" style="color:#93c5fd;">YouTube</a>
+        </div>
+                <div style="margin-top:8px;">© <span id="year"></span> Quick2ools. All rights reserved. <span>Developed by <a href="https://www.upwork.com/freelancers/~01d1d5a749f178d27b">Sheraz A.</a></span></div>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
+
